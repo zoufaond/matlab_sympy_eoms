@@ -2,7 +2,7 @@
 timeSpan = linspace(0.0, 10.0, 1000);
 
 % Set initial angles in radians and the initial speeds to zero.
-initialConditions_pydy = [0.5, 0, 0.0, 0.0];
+initialConditions_pydy = [0, 0, 0.0, 0.0];
 initialConditions_moje = [0, 0, 0.0, 0.0];
 
 % Define particles' mass, pendulums' length, and the acceleration due to
@@ -10,6 +10,10 @@ initialConditions_moje = [0, 0, 0.0, 0.0];
 m = 1.0;
 l = 10.0;
 g = 9.81;
+% koeficienty tlumeni minus, protoze v pythonu jsou momenty s opacnym
+% znamenkem
+c1 = -500;
+c2 = -500;
 
 % % Create a function handle to an anonymous function which which can pass the
 % % parameters.
@@ -25,7 +29,7 @@ g = 9.81;
 % legend('q1 [rad]','q2 [rad]')
 % Create a function handle to an anonymous function which which can pass the
 % parameters.
-f = @(t, x) fun_moje(t, x, m, l, g);
+f = @(t, x) fun_moje(t, x, m, l, g, c1, c2);
 
 % Integrate the equations of motion with default integration settings.
 [t, x] = ode45(f, timeSpan, initialConditions_moje);
