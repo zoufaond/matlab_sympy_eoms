@@ -32,10 +32,16 @@ c2 = -500;
 f = @(t, x) fun_moje(t, x, m, l, g, c1, c2);
 
 % Integrate the equations of motion with default integration settings.
-[t, x] = ode45(f, timeSpan, initialConditions_moje);
+[t, x] = ode45(f, out.tout, initialConditions_moje);
 % Plot the results.
 fig = figure();
-plot(t, x(:,1),t,x(:,2))
-title('moje')
+plot(t, x(:,1),t,out.q1.signals.values(:))
+title('3d pend X')
 xlabel('Time [s]')
-legend('q1 [rad]','q2 [rad]')
+legend('q1 sympy [rad]','q1 simulink [rad]')
+
+fig = figure();
+plot(t, x(:,2),t,out.q2.signals.values(:))
+title('3d pend Y')
+xlabel('Time [s]')
+legend('q2 sympy [rad]','q2 simulink [rad]')

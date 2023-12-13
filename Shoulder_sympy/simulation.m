@@ -1,16 +1,17 @@
-% Integrate the equations over from 0 to 5 seconds with 50 steps.
-% timeSpan = linspace(0,4,40);
-timeSpan = [0:0.001:2];
 
-% Set initial angles in radians and the initial speeds to zero.
+t_end = 1;
+out = sim("clavicula_model.slx",t_end);
+
 initialConditions_moje = [0,0,0,0,0,0];
 
 %% Clavicula
 g = 9.80665;
-I = [5.75482e-05, 6.05521e-05, 1.05345e-05,-1.27405e-05, 1.65861e-05, 4.50136e-06];
+I = [5.75482e-05, 6.05521e-05, 1.05345e-05,0,0,0];
 com = [-0.0110972, 0.00637508, 0.0541825];
 m = 0.0370005;
 c = [1,1,1]*1e-3;
+
+
 
 %% Scapula
 % g = 9.80665;
@@ -19,14 +20,25 @@ c = [1,1,1]*1e-3;
 % m = 0.12759;
 % c = [1,1,1]*1;
 
-f = @(t, x) clvc(t, x, g,m, I, com, c);
+f = @(t, x) clvcl_f_com(t, x, g,m, I, com, c);
 
 % Integrate the equations of motion with default integration settings.
-[t, x] = ode23t(f, timeSpan, initialConditions_moje);
+[t, x] = ode45(f, out.tout, initialConditions_moje);
 % Plot the results.
 fig = figure();
-plot(t, x(:,1),t,x(:,2),t,x(:,3))
-title('Upper')
+plot(t, x(:,1),t,out.q1.signals.values(:))
+title('3d pend X')
 xlabel('Time [s]')
-legend('q1 [rad]','q2 [rad]', 'q3 [rad]')
-% 
+legend('q1 sympy [rad]','q1 simulink [rad]')
+
+fig = figure();
+plot(t, x(:,2),t,out.q2.signals.values(:))
+title('3d pend Y')
+xlabel('Time [s]')
+legend('q2 sympy [rad]','q2 simulink [rad]')
+
+fig = figure();
+plot(t, x(:,3),t,out.q3.signals.values(:))
+title('3d pend Z')
+xlabel('Time [s]')
+legend('q3 sympy [rad]','q3 simulink [rad]')
