@@ -1,25 +1,22 @@
-% Integrate the equations over from 0 to 5 seconds with 50 steps.
-t_end = 25;
-out = sim("pend_3D_sim.slx",t_end);
+t_end = 100;
+initialConditions_moje = [0.7,0.7,0.7,0,0,0];
 
-% Set initial angles in radians and the initial speeds to zero.
-initialConditions_moje = [0.3,0.3,0.3,0,0,0];
-
-% Define particles' mass, pendulums' length, and the acceleration due to
-% gravity.
 
 %% brick solid
 mass = 10.0;
-l = 5.0;
+l = 5;
 a = 0.5;
 b = -0.5;
 g = 9.80665;
 IB = [84.1667, 84.1667, 1.66667,0, 0, 0];
+c = [1,1,1]*0.01;
 
-f = @(t, x) pend(t, x, g, l, mass, IB, a,b);
+out = sim("pend_3D_sim.slx",t_end);
+f = @(t, x) pend(t, x, g, l, mass, IB, a,b,c);
 
 % Integrate the equations of motion with default integration settings.
-[t, x] = ode45(f, out.x_sim.time, initialConditions_moje);
+options = odeset('AbsTol',1e-3,'RelTol',1e-3);
+[t, x] = ode23tb(f, out.x_sim.time, initialConditions_moje);
 % Plot the results.
 fig = figure();
 plot(t, x(:,1),t,out.x_sim.signals.values(:))
