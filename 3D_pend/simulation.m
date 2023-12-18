@@ -1,4 +1,4 @@
-t_end = 5000;
+t_end = 50;
 initialConditions_moje = [2.7,0,0,0,0,0];
 
 
