@@ -1,22 +1,22 @@
-t_end = 100;
-initialConditions_moje = [0.7,0.7,0.7,0,0,0];
+t_end = 5000;
+initialConditions_moje = [2.7,0,0,0,0,0];
 
 
 %% brick solid
 mass = 10.0;
 l = 5;
-a = 0.5;
-b = -0.5;
+a = 0;
+b = 0;
 g = 9.80665;
 IB = [84.1667, 84.1667, 1.66667,0, 0, 0];
-c = [1,1,1]*0.01;
+c = [1,1,1]*0;
 
 out = sim("pend_3D_sim.slx",t_end);
 f = @(t, x) pend(t, x, g, l, mass, IB, a,b,c);
 
 % Integrate the equations of motion with default integration settings.
 options = odeset('AbsTol',1e-3,'RelTol',1e-3);
-[t, x] = ode23tb(f, out.x_sim.time, initialConditions_moje);
+[t, x] = ode45(f, out.x_sim.time, initialConditions_moje);
 % Plot the results.
 fig = figure();
 plot(t, x(:,1),t,out.x_sim.signals.values(:))
