@@ -1,15 +1,15 @@
-t_end = 50;
-initialConditions_moje = [2.7,0,0,0,0,0];
+t_end = 100;
+initialConditions_moje = [0.7,0.7,0.7,0,0,0];
 
 
 %% brick solid constants
 mass = 10.0;
 l = 5;
-a = 0;
-b = 0;
+a = 0.5;
+b = -0.5;
 g = 9.80665;
 IB = [84.1667, 84.1667, 1.66667,0, 0, 0];
-c = [1,1,1]*0;
+c = [1,1,1];
 %% simulation
 
 out = sim("pend_3D_sim.slx",t_end); % run simscape first
