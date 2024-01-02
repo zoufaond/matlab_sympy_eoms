@@ -1,9 +1,8 @@
 % Integrate the equations over from 0 to 5 seconds with 50 steps.
-timeSpan = linspace(0.0, 10.0, 1000);
+t_end = 100;
 
 % Set initial angles in radians and the initial speeds to zero.
-initialConditions_pydy = [0, 0, 0.0, 0.0];
-initialConditions_moje = [0, 0, 0.0, 0.0];
+initialConditions = [0, 0, 0.0, 0.0];
 
 % Define particles' mass, pendulums' length, and the acceleration due to
 % gravity.
@@ -12,8 +11,12 @@ l = 10.0;
 g = 9.81;
 % koeficienty tlumeni minus, protoze v pythonu jsou momenty s opacnym
 % znamenkem
-c1 = -500;
-c2 = -500;
+c1 = 10;
+c2 = 10;
+k1 = 100;
+k2 = 100;
+
+OUT = sim('double_pend_example.slx',t_end);
 
 % % Create a function handle to an anonymous function which which can pass the
 % % parameters.
@@ -29,19 +32,13 @@ c2 = -500;
 % legend('q1 [rad]','q2 [rad]')
 % Create a function handle to an anonymous function which which can pass the
 % parameters.
-f = @(t, x) fun_moje(t, x, m, l, g, c1, c2);
-
+f = @(t, x) fun_moje(t, x, m, l, g, c1, c2, k1, k2);
+% 
 % Integrate the equations of motion with default integration settings.
-[t, x] = ode45(f, out.tout, initialConditions_moje);
+[t, x] = ode45(f, OUT.tout, initialConditions);
 % Plot the results.
 fig = figure();
-plot(t, x(:,1),t,out.q1.signals.values(:))
-title('3d pend X')
+plot(t, x(:,1),t,x(:,2),t,OUT.q1(1,:),'o',t,OUT.q2(1,:),'*')
+title('moje')
 xlabel('Time [s]')
-legend('q1 sympy [rad]','q1 simulink [rad]')
-
-fig = figure();
-plot(t, x(:,2),t,out.q2.signals.values(:))
-title('3d pend Y')
-xlabel('Time [s]')
-legend('q2 sympy [rad]','q2 simulink [rad]')
+legend('q1 [rad]','q2 [rad]','q1_sim [rad]','q2_sim [rad]')
