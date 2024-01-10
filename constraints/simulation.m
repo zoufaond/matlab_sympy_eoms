@@ -1,5 +1,5 @@
 % Integrate the equations over from 0 to 5 seconds with 50 steps.
-t_end = 20;
+t_end = 3;
 
 
 % Set initial angles in radians and the initial speeds to zero.
@@ -13,18 +13,18 @@ g = 9.81;
 ax = 1;
 ay = 10;
 az = 1;
-k = 2e5;
+k = 2e8;
 mx = 2;
 my = -5;
 mz = 0;
-eps = 0.01; 
+eps = 0.001; 
 c = 10;
 % DAVAT POZOR NA eps A k, JE TREBA DOBRE NALADIT
 
 out = sim("chadwick.slx",t_end); % run simscape first
 f = @(t, x) fun(t, x, m, g, mx, my, ax, ay, eps,k,l,c);
 % Integrate the equations of motion with default integration settings.
-[t, x] = ode89(f, out.tout, initialConditions);
+[t, x] = ode89(f, out.time.time, initialConditions);
 % Plot the results.
 fig = figure();
 plot(t, x(:,1),t,x(:,2),t,out.q(1,:),'o',t,out.w(1,:),'*')
