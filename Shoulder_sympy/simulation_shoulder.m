@@ -1,5 +1,5 @@
 % Integrate the equations over from 0 to 5 seconds with 50 steps.
-t_end = 4;
+t_end = 1;
 
 % Set initial angles in radians and the initial speeds to zero.
 initialConditions = [0,0,0,0,0,0,0,0,0,0,0,0];
@@ -14,8 +14,8 @@ ccom = [-0.0110972, 0.00637508, 0.0541825];
 sI = [0.00020065, 0.000202939, 0.000227237,-4.55661e-05, -7.53511e-05, -7.42694e-05];
 scom = [-0.0512948, -0.0367122, -0.0430756];
 m = [0.0370005,0.12759];
-c = 1e4;
-k = 0;
+c = 1e-6;
+k = 1e0;
 T_c = [-0.01433, 0.02007, 0.135535];
 
 f = @(t, x) shoulder(t, x,g,m,cI,sI,scom,ccom, T_c, c, k);
@@ -23,7 +23,7 @@ f = @(t, x) shoulder(t, x,g,m,cI,sI,scom,ccom, T_c, c, k);
 % Integrate the equations of motion with default integration settings.
 options = odeset('RelTol',1e-9,'AbsTol',1e-9,'Refine',1,'MaxStep',1e-3);
 out = sim("shoulder_model.slx",t_end);
-[t, x] = ode15s(f, out.time.time, initialConditions);
+[t, x] = ode45(f, out.time.time, initialConditions);
 % Plot the results.
 fig = figure();
 plot(t, x(:,1),t,x(:,2),t,x(:,3),t,out.q1(1,:),'*',t,out.q2(1,:),'o',t,out.q3(1,:),'x')

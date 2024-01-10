@@ -1,8 +1,8 @@
 
 t_end = 10;
-c = 1e-30;
+c = 1e-3;
 k = 0;
-initialConditions_moje = [0,0.2,0,0,0,0];
+initialConditions_moje = [0,0,0,0,0,0];
 %% Clavicula
 g = 9.80665;
 I = [5.75482e-05, 6.05521e-05, 1.05345e-05,-1.27405e-05, 1.65861e-05, 4.50136e-06];
