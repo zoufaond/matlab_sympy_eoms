@@ -1,8 +1,8 @@
 
-t_end = 10;
+t_end = 50;
 
 % Set initial angles in radians and the initial speeds to zero.
-initialConditions = [0,0.2,0.3,0,0,0,0,0,0,0,0,0];
+initialConditions = [0.9,0.2,0.3,0,0,0,0,0,0,0,0,0];
 
 % Define particles' mass, pendulums' length, and the acceleration due to
 % gravity.
@@ -12,8 +12,8 @@ s2 = [5,0,0];
 g = 9.81;
 IU = [84.1667, 84.1667, 1.66667];
 IL = [84.1667, 84.1667, 1.66667];
-c = [1,1,1,1,1,1]*10;
-k = [10,10];
+c = [1,1,1,1,1,1]*100;
+k = [1,1];
 
 OUT = sim('pend_3D_sim.slx',t_end);
 

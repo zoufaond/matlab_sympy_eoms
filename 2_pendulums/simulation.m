@@ -1,8 +1,8 @@
 % Integrate the equations over from 0 to 5 seconds with 50 steps.
-t_end = 1;
+t_end = 100;
 
 % Set initial angles in radians and the initial speeds to zero.
-initialConditions = [1, 0, 0.0, 0.0];
+initialConditions = [0, 0, 0.0, 0.0];
 
 % Define particles' mass, pendulums' length, and the acceleration due to
 % gravity.
