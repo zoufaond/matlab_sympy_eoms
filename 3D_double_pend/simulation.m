@@ -1,8 +1,8 @@
 
-t_end = 5;
+t_end = 15;
 
 % Set initial angles in radians and the initial speeds to zero.
-initialConditions = [0,0,0,0,0,0,0,0,0,0,0,0];
+initialConditions = [-0.5,0.1,0,0,0,0,0,0,0,0,0,0];
 
 % Define particles' mass, pendulums' length, and the acceleration due to
 % gravity.
@@ -12,13 +12,27 @@ s2 = [5,0,0];
 g = 9.81;
 IU = [84.1667, 84.1667, 1.66667];
 IL = [84.1667, 84.1667, 1.66667];
-c = [1,1,1,1,1,1]*0;
+c = [1,1,1,1,1,1]*1e3;
 k = [1,1]*0;
-f = [-100,-100];
+f = [1,1]*10;
+% kontaktni bod na lower
+cont_P = [0 0 0];
+% umisteni elipsoidu
+x_ej = 0;% -0.03;
+y_ej = 0; %-0.1;
+z_ej = -15;
+T_el = [x_ej,y_ej,z_ej];
+% tvar eliposidu
+a_ej = 5;
+b_ej = 5;
+c_ej = 10;
+sh_e = [a_ej,b_ej,z_ej];
+eps = 0.0001;
+k_contact = 10000;
 
 OUT = sim('pend_3D_sim.slx',t_end);
 
-f = @(t, x) fcn(t, x, g, m, s1, s2, IU, IL,c,k,f);
+f = @(t, x) fcn(t, x, g, m, s1, s2, IU, IL,c,k,f,sh_e,T_el,eps,k_contact,cont_P);
 
 % Integrate the equations of motion with default integration settings.
 options = odeset('AbsTol',1e-8,'RelTol',1e-8);
