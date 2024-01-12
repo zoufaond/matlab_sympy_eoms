@@ -1,8 +1,9 @@
 
-t_end = 10;
-c = 1e-3;
+t_end = 4;
+c = 8e-20;
 k = 0;
 initialConditions_moje = [0,0,0,0,0,0];
+akt = -0.1;
 %% Clavicula
 g = 9.80665;
 I = [5.75482e-05, 6.05521e-05, 1.05345e-05,-1.27405e-05, 1.65861e-05, 4.50136e-06];
@@ -16,11 +17,11 @@ m = 0.0370005;
 
 out = sim("clavicula_model.slx",t_end);
 
-f = @(t, x) clvcl_f_com(t, x, g,m, I, com, c, k);
+f = @(t, x) clvcl_f_com(t, x, g,m, I, com, c, k, akt);
 
 % Integrate the equations of motion with default integration settings.
 % Integrate the equations of motion with default integration settings.
-options = odeset('RelTol',1e-9,'AbsTol',1e-9,'Refine',1,'MaxStep',0.001);
+options = odeset('RelTol',1e-9,'AbsTol',1e-9,'Refine',4,'MaxStep',0.001);
 [t, x] = ode45(f, out.q1.time, initialConditions_moje,options);
 % Plot the results.
 fig = figure();

@@ -1,8 +1,8 @@
 
-t_end = 50;
+t_end = 5;
 
 % Set initial angles in radians and the initial speeds to zero.
-initialConditions = [0.9,0.2,0.3,0,0,0,0,0,0,0,0,0];
+initialConditions = [0,0,0,0,0,0,0,0,0,0,0,0];
 
 % Define particles' mass, pendulums' length, and the acceleration due to
 % gravity.
@@ -12,12 +12,13 @@ s2 = [5,0,0];
 g = 9.81;
 IU = [84.1667, 84.1667, 1.66667];
 IL = [84.1667, 84.1667, 1.66667];
-c = [1,1,1,1,1,1]*100;
-k = [1,1];
+c = [1,1,1,1,1,1]*0;
+k = [1,1]*0;
+f = [-100,-100];
 
 OUT = sim('pend_3D_sim.slx',t_end);
 
-f = @(t, x) fcn(t, x, g, m, s1, s2, IU, IL,c,k);
+f = @(t, x) fcn(t, x, g, m, s1, s2, IU, IL,c,k,f);
 
 % Integrate the equations of motion with default integration settings.
 options = odeset('AbsTol',1e-8,'RelTol',1e-8);
