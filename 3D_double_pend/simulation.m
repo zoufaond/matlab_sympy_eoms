@@ -1,5 +1,5 @@
 
-t_end = 15;
+t_end = 8;
 
 % Set initial angles in radians and the initial speeds to zero.
 initialConditions = [-0.5,0.1,0,0,0,0,0,0,0,0,0,0];
@@ -14,7 +14,9 @@ IU = [84.1667, 84.1667, 1.66667];
 IL = [84.1667, 84.1667, 1.66667];
 c = [1,1,1,1,1,1]*1e3;
 k = [1,1]*0;
-f = [1,1]*10;
+force = -[1,1]*100;
+akt = [1,1]*0.2;
+l0m = [15,20];
 % kontaktni bod na lower
 cont_P = [0 0 0];
 % umisteni elipsoidu
@@ -32,7 +34,7 @@ k_contact = 10000;
 
 OUT = sim('pend_3D_sim.slx',t_end);
 
-f = @(t, x) fcn(t, x, g, m, s1, s2, IU, IL,c,k,f,sh_e,T_el,eps,k_contact,cont_P);
+f = @(t, x) fcn(t, x, g, m, s1, s2, IU, IL,c,k,sh_e,T_el,eps,k_contact,cont_P,akt,force,l0m);
 
 % Integrate the equations of motion with default integration settings.
 options = odeset('AbsTol',1e-8,'RelTol',1e-8);
