@@ -14,9 +14,9 @@ IU = [84.1667, 84.1667, 1.66667];
 IL = [84.1667, 84.1667, 1.66667];
 c = [1,1,1,1,1,1]*1e3;
 k = [1,1]*0;
-force = -[1,1]*100;
-akt = [1,1]*0.2;
-l0m = [15,20];
+force = -[1,1,1]*100;
+akt = [1,1,1]*0.5;
+l0m = [15,20,30];
 % kontaktni bod na lower
 cont_P = [0 0 0];
 % umisteni elipsoidu
@@ -38,7 +38,7 @@ f = @(t, x) fcn(t, x, g, m, s1, s2, IU, IL,c,k,sh_e,T_el,eps,k_contact,cont_P,ak
 
 % Integrate the equations of motion with default integration settings.
 options = odeset('AbsTol',1e-8,'RelTol',1e-8);
-[t, x] = ode89(f, OUT.tout, initialConditions,options);
+[t, x] = ode45(f, OUT.tout, initialConditions,options);
 % Plot the results.
 fig = figure();
 plot(t, x(:,1),t,x(:,2),t,x(:,3),t,OUT.q1(1,:),'*',t,OUT.q2(1,:),'o',t,OUT.q3(1,:),'x')

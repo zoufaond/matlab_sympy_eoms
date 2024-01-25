@@ -1,12 +1,19 @@
 % Integrate the equations over from 0 to 5 seconds with 50 steps.
 t_end = 2;
+Glenohumeral = readmatrix('Glenohumeral_muscles.xlsx');
+Glenohumeral_F0M = Glenohumeral(2:end,2);
+Glenohumeral_l0  = Glenohumeral(2:end,3);
+Scapulothoracic = readmatrix('Scapulothoracic_muscles.xlsx');
+Scapulothoracic_F0M = -Scapulothoracic(2:end,2);
+Scapulothoracic_l0  = Scapulothoracic(2:end,3);
 
 % Set initial angles in radians and the initial speeds to zero.
 initialConditions = [0,0,0,0,0,0,0,0,0,0,0,0];
 % initialConditions = [1.4177,-0.1017,3.0485,-2.3599,0.5726,1.2291,0,0,0,0,0,0]; %stabilni poloha simulinku pri nulovych vnejsich silach
 % initialConditions = [0.8982,0.3930,-2.7109,0.1216,-0.1490,-0.0864,0,0,0,0,0,0];
 % kontaktni bod na scapule
-cont_P = [-0.105456 -0.125076 -0.075251];
+cont_P1 = [-0.083529 -0.01368 -0.098954];
+cont_P2 = [-0.105456 -0.125076 -0.075251];
 % umisteni elipsoidu
 x_ej = -0.03;
 y_ej = -0.1;
@@ -20,8 +27,10 @@ sh_e = [a_ej,b_ej,z_ej];
 eps = 0.0001;
 k_contact = 10000;
 g = 9.8;
+akt = [1];
 
-Ckonst = 1e2;
+
+Ckonst = 1e5;
 cI = [5.75482e-05, 6.05521e-05, 1.05345e-05,-1.27405e-05, 1.65861e-05, 4.50136e-06]*Ckonst; %,-1.27405e-05, 1.65861e-05, 4.50136e-06
 ccom = [-0.0110972, 0.00637508, 0.0541825];
 sI = [0.00020065, 0.000202939, 0.000227237,-4.55661e-05, -7.53511e-05, -7.42694e-05]*Ckonst; %,-4.55661e-05, -7.53511e-05, -7.42694e-05
@@ -37,7 +46,7 @@ T_c = [-0.01433, 0.02007, 0.135535];
 % m = [1,1];
 % T_c = [-0.01433 0.02007 0.135535];
 
-c = 1e-3;
+c = 1e-1;
 k = 0;
 
 k_vaz = 0;
@@ -45,7 +54,7 @@ k_vaz = 0;
 fc = -[0.282,0.4]*0.5;
 fs = -[0.1,0.23,0.73]*0.5;
 
-f = @(t, x) shoulder(t, x,g,m,cI,sI,scom,ccom, T_c, c, k, fc, fs, k_vaz,sh_e,T_el,eps,k_contact,cont_P);
+f = @(t, x) shoulder(t, x,g,m,cI,sI,scom,ccom, T_c, c, k,sh_e,T_el,eps,k_contact,cont_P1,cont_P2, akt, Scapulothoracic_F0M(1:2),Scapulothoracic_l0(1:2));
 
 % Integrate the equations of motion with default integration settings.
 options = odeset('RelTol',1e-9,'AbsTol',1e-9,'Refine',1,'MaxStep',1e-1);
