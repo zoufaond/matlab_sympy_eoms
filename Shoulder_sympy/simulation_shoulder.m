@@ -27,10 +27,10 @@ sh_e = [a_ej,b_ej,z_ej];
 eps = 0.0001;
 k_contact = 10000;
 g = 9.8;
-akt = [1];
+akt = [0];
 
 
-Ckonst = 1e5;
+Ckonst = 1e3;
 cI = [5.75482e-05, 6.05521e-05, 1.05345e-05,-1.27405e-05, 1.65861e-05, 4.50136e-06]*Ckonst; %,-1.27405e-05, 1.65861e-05, 4.50136e-06
 ccom = [-0.0110972, 0.00637508, 0.0541825];
 sI = [0.00020065, 0.000202939, 0.000227237,-4.55661e-05, -7.53511e-05, -7.42694e-05]*Ckonst; %,-4.55661e-05, -7.53511e-05, -7.42694e-05
@@ -46,15 +46,12 @@ T_c = [-0.01433, 0.02007, 0.135535];
 % m = [1,1];
 % T_c = [-0.01433 0.02007 0.135535];
 
-c = 1e-1;
+c = 1e-3;
 k = 0;
 
 k_vaz = 0;
 
-fc = -[0.282,0.4]*0.5;
-fs = -[0.1,0.23,0.73]*0.5;
-
-f = @(t, x) shoulder(t, x,g,m,cI,sI,scom,ccom, T_c, c, k,sh_e,T_el,eps,k_contact,cont_P1,cont_P2, akt, Scapulothoracic_F0M(1:2),Scapulothoracic_l0(1:2));
+f = @(t, x) shoulder(t, x,g,m,cI,sI,scom,ccom, T_c, c, k,sh_e,T_el,eps,k_contact,cont_P1,cont_P2, akt, num2cell(Scapulothoracic_F0M(1:7)),num2cell(Scapulothoracic_l0(1:7)));
 
 % Integrate the equations of motion with default integration settings.
 options = odeset('RelTol',1e-9,'AbsTol',1e-9,'Refine',1,'MaxStep',1e-1);

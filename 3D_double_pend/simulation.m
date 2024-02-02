@@ -10,13 +10,13 @@ m = [10,10];
 s1 = [5,0,0];
 s2 = [5,0,0];
 g = 9.81;
-IU = [84.1667, 84.1667, 1.66667];
-IL = [84.1667, 84.1667, 1.66667];
+IU = [84.1667, 84.1667, 1.66667,0,0,0];
+IL = [84.1667, 84.1667, 1.66667,0,0,0];
 c = [1,1,1,1,1,1]*1e3;
 k = [1,1]*0;
 force = -[1,1,1]*100;
-akt = [1,1,1]*0.5;
-l0m = [15,20,30];
+akt = [1,1,1]*1;
+l0m = [30,20,30];
 % kontaktni bod na lower
 cont_P = [0 0 0];
 % umisteni elipsoidu
@@ -41,13 +41,13 @@ options = odeset('AbsTol',1e-8,'RelTol',1e-8);
 [t, x] = ode45(f, OUT.tout, initialConditions,options);
 % Plot the results.
 fig = figure();
-plot(t, x(:,1),t,x(:,2),t,x(:,3),t,OUT.q1(1,:),'*',t,OUT.q2(1,:),'o',t,OUT.q3(1,:),'x')
+plot(t, x(:,1),t,x(:,2),t,x(:,3),t,OUT.q1(1,:),'*',t,OUT.q2(1,:),'o',t,OUT.q3(1,:),'x',t,OUT.q7(1,:),'+',t,OUT.q8(1,:),'square',t,OUT.q9(1,:),'diamond') %
 title('Upper')
 xlabel('Time [s]')
-legend('q1 [rad]','q2 [rad]', 'q3 [rad]', 'q1sim [rad]','q2sim [rad]','q3sim [rad]')
+legend('q1 [rad]','q2 [rad]', 'q3 [rad]', 'q1sim [rad]','q2sim [rad]','q3sim [rad]','q1sim symp [rad]','q2sim symp [rad]','q3sim symp [rad]')
 % 
 fig = figure();
-plot(t, x(:,4),t,x(:,5),t,x(:,6),t,OUT.q4(1,:),'*',t,OUT.q5(1,:),'o',t,OUT.q6(1,:),'x')
+plot(t, x(:,4),t,x(:,5),t,x(:,6),t,OUT.q4(1,:),'*',t,OUT.q5(1,:),'o',t,OUT.q6(1,:),'x',t,OUT.q10(1,:),'+',t,OUT.q11(1,:),'square',t,OUT.q12(1,:),'diamond')
 title('Lower')
 xlabel('Time [s]')
-legend('q4 [rad]','q5 [rad]', 'q6 [rad]','q4sim [rad]','q5sim [rad]','q6sim [rad]')
+legend('q4 [rad]','q5 [rad]', 'q6 [rad]','q4sim [rad]','q5sim [rad]','q6sim [rad]','q4sim symp [rad]','q5sim symp [rad]','q6sim symp [rad]')
