@@ -1,7 +1,7 @@
 t_end = 8;
 coder.extrinsic("fcn.m")
 % Set initial angles in radians and the initial speeds to zero.
-initialConditions = [-0.5,0.1,0,0,0,0,0,0,0,0,0,0];
+initialConditions = [1,1,1,1,1,1,0,0,0,0,0,0]*0.1;
 
 % Define particles' mass, pendulums' length, and the acceleration due to
 % gravity.
@@ -9,12 +9,12 @@ m = [10,10];
 s1 = [5,0,0];
 s2 = [5,0,0];
 g = 9.81;
-IU = [84.1667, 84.1667, 1.66667,0,0,0];
-IL = [84.1667, 84.1667, 1.66667,0,0,0];
-c = [1,1,1,1,1,1]*1e3;
-k = [1,1]*0;
-force = -[1,2,1]*100;
-akt = [1,1,1]*1;
+IU = [84.1667, 84.1667, 1.66667];
+IL = [84.1667, 84.1667, 1.66667];
+c = [1,1,1,1,1,1]*1e1;
+k = [1,1]*1;
+force = -[1,2,1]*0;
+akt = [1,1,1]*0;
 l0m = [30,20,30];
 % kontaktni bod na lower
 cont_P = [0 0 0];

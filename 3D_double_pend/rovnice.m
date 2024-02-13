@@ -1,0 +1,1 @@
+mm(0,ones(1,6),ones(1,6),ones(1,2),ones(1,6))
