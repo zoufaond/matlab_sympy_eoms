@@ -1,4 +1,5 @@
 clc;clear all
+data;
 t_end = 1;
 initialConditions = zeros(1,18);
 
