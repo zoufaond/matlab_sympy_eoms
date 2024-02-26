@@ -1,6 +1,6 @@
 clc;clear all
 data;
-t_end = 1;
+t_end = 2;
 initialConditions = zeros(1,18);
 
 % Parametry pro kazde teleso
@@ -9,13 +9,6 @@ initialConditions = zeros(1,18);
 % v simulinku je zadan pohyb pro jednotlive nezavisle souradnice q1..q9 a
 % pomoci inverzni dynamiky dopocitany potrebne momentove sily
 
-m = [100,100,50];
-g = 9.81;
-IU = [84.1667, 84.1667, 1.66667];
-IM = [84.1667, 84.1667, 1.66667];
-IL = [84.1667, 84.1667, 1.66667];
-c = 1;
-k = 1;
 force = -[1,2,1]*10000;
 akt = [1,1,1]*1;
 l0m = [50,10,30];
