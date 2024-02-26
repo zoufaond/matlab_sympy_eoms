@@ -14,11 +14,11 @@ b2 = s2(3);
 
 xd = zeros(12,1);
 
-fesim = fe(0,[x(1),x(2),x(3),x(4),x(5),x(6)],force,l0m,akt);
+fesim = fe(0,x',force,l0m,akt); %x(1),x(2),x(3),x(4),x(5),x(6)
 
-fosim = fo(0,[x(1),x(2),x(3),x(4),x(5),x(6),x(7),x(8),x(9),x(10),x(11),x(12)],[IU,IL],m,c,k,g);
+fosim = fo(0,x',[IU,IL],m,c,k,g);
 
-mmsim = mm(0,[x(1),x(2),x(3),x(4),x(5),x(6)],[IU,IL],m);
+mmsim = mm(0,x',[IU,IL],m);
 
 
 R = mmsim\(fosim+fesim);
