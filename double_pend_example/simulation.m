@@ -1,5 +1,5 @@
 % Integrate the equations over from 0 to 5 seconds with 50 steps.
-t_end = 1;
+t_end = 10;
 
 % Set initial angles in radians and the initial speeds to zero.
 initialConditions = [1, 0, 0.0, 0.0];
@@ -11,10 +11,10 @@ l = 10.0;
 g = 9.81;
 % koeficienty tlumeni minus, protoze v pythonu jsou momenty s opacnym
 % znamenkem
-c1 = 10;
-c2 = 10;
-k1 = 100;
-k2 = 100;
+c1 = 1000;
+c2 = 1000;
+k1 = 0;
+k2 = 0;
 
 OUT = sim('double_pend_example.slx',t_end);
 

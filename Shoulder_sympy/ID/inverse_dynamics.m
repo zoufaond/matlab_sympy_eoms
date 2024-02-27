@@ -19,16 +19,16 @@ fig = figure();
 plot(t,OUT.q1(1,:),t,OUT.q2(1,:),t,OUT.q3(1,:),t,OUT.q10(1,:),'+',t,OUT.q11(1,:),'square',t,OUT.q12(1,:),'diamond')
 title('UPPER BODY - MOMENTS')
 xlabel('Time [s]')
-legend('T1 sim [rad]','T2 sim [rad]','T3 sim [rad]','T1sim symp [rad]','T2sim symp [rad]','T3sim symp [rad]')
+legend('T1 SimScape [rad]','T2 SimScape [rad]','T3 SimScape [rad]','T1sim Sympy [rad]','T2sim Sympy [rad]','T3sim Sympy [rad]')
 % 
 fig = figure();
 plot(t,OUT.q4(1,:),t,OUT.q5(1,:),t,OUT.q6(1,:),t,OUT.q13(1,:),'+',t,OUT.q14(1,:),'square',t,OUT.q15(1,:),'diamond')
 title('MIDDLE BODY - MOMENTS')
 xlabel('Time [s]')
-legend('T4 sim [rad]','T5 sim [rad]','T6 sim [rad]','T4sim symp [rad]','T5sim symp [rad]','T6sim symp [rad]')
+legend('T4 SimScape [rad]','T5 SimScape [rad]','T6 SimScape [rad]','T4sim Sympy [rad]','T5sim Sympy [rad]','T6sim Sympy [rad]')
 
 fig = figure();
 plot(t,OUT.q7(1,:),t,OUT.q8(1,:),t,OUT.q9(1,:),t,OUT.q16(1,:),'+',t,OUT.q17(1,:),'square',t,OUT.q18(1,:),'diamond')
 title('LOWER BODY - MOMENTS')
 xlabel('Time [s]')
-legend('T4 sim [rad]','T5 sim [rad]','T6 sim [rad]','T4sim symp [rad]','T5sim symp [rad]','T6sim symp [rad]')
+legend('T4 SimScape [rad]','T5 SimScape [rad]','T6 SimScape [rad]','T4sim Sympy [rad]','T5sim Sympy [rad]','T6sim Sympy [rad]')
