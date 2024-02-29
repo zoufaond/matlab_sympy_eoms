@@ -1,6 +1,6 @@
 clc;clear all
 data;
-t_end = 2;
+t_end = 1;
 initialConditions = zeros(1,18);
 
 % Parametry pro kazde teleso
@@ -9,8 +9,8 @@ initialConditions = zeros(1,18);
 % v simulinku je zadan pohyb pro jednotlive nezavisle souradnice q1..q9 a
 % pomoci inverzni dynamiky dopocitany potrebne momentove sily
 
-force = -[10,1,20]*0;
-akt = [1,1,1]*0;
+force = -[10,1,20]*10;
+akt = [1,1,1]*1;
 l0m = [0.1,0.1,0.3];
 
 OUT = sim('ID_3d_pend.slx',t_end);

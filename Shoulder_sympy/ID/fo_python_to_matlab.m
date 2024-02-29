@@ -17,6 +17,4 @@ T_c = [T_cx,T_cy,T_cz];
 T_s = [T_sx,T_sy,T_sz];
 p = [c,k,g];
 
-
-
 matlabFunction(fo,'file','fo','vars',{t,q,m,Ic,Is,Ih,ccom,scom,hcom,T_t,T_c,T_s,p,m_el,a_el,cont1,cont2,cont_params});
