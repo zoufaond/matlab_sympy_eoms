@@ -1,24 +1,40 @@
 clc;clear all
+table = readtable('Glenohumeral_muscles.xlsx');
+muscles = zeros(1,3);
+names = table2array(table(:,1));
+f0ms = str2double(table2array(table(:,2)));
+opt_lens = str2double(table2array(table(:,3)));
+origins = table2array(table(:,5));
+origin_coords = coords2arr(table2array(table(:,6)));
+insertions = table2array(table(:,7));
+insertion_coords = coords2arr(table2array(table(:,8)));
+
 
 q = sym('q',[1 9]);
 dq = sym('dq', [1 9]);
-F_iso = sym('F_iso',[1 3]);
-l0m = sym('l0m', [1 3]);
 akt = sym('akt',[1 3]);
 t = sym('t');
-muscle1_len = muscle_length('Clavicle','Humerus',[-0.002 0.032 0.131],[0.005 -0.104 0.008],q);
-muscle2_len = muscle_length('Scapula','Humerus',[-0.028 -0.005 0.025],[-0.004 -0.058 0.028],q);
-muscle3_len = muscle_length('Thorax','Humerus',[0.042 -0.043 0.081],[0.016 -0.035 0.005],q);
+for i = 1:2
+    muscle_lens(i) = muscle_length(origins{i},insertions{i},origin_coords(i,:),insertion_coords(i,:),q);
+    muscle_forces(i) = muscle_force(muscle_lens(i),-f0ms(i),akt(i),opt_lens(i));
+end
 
-muscle1_force = muscle_force(muscle1_len,F_iso(1), akt(1), l0m(1));
-muscle2_force = muscle_force(muscle2_len,F_iso(2), akt(2), l0m(2));
-muscle3_force = muscle_force(muscle3_len,F_iso(3), akt(3), l0m(3));
+fe = [zeros(9,1);jacobian(muscle_lens,q)'*muscle_forces'];
+% matlabFunction(fe,'file','fe','vars',{t,[q,dq],akt});
+% muscle1_len = muscle_length('Clavicle','Humerus',[-0.002 0.032 0.131],[0.005 -0.104 0.008],q);
+% muscle2_len = muscle_length('Scapula','Humerus',[-0.028 -0.005 0.025],[-0.004 -0.058 0.028],q);
+% muscle3_len = muscle_length('Thorax','Humerus',[0.042 -0.043 0.081],[0.016 -0.035 0.005],q);
+% 
+% muscle1_force = muscle_force(muscle1_len,F_iso(1), akt(1), l0m(1));
+% muscle2_force = muscle_force(muscle2_len,F_iso(2), akt(2), l0m(2));
+% muscle3_force = muscle_force(muscle3_len,F_iso(3), akt(3), l0m(3));
+% 
+% lengths = [muscle1_len,muscle2_len,muscle3_len];
+% forces = [muscle1_force,muscle2_force,muscle3_force]';
+% jacs = jacobian(lengths,q)';
+% fe = [zeros(9,1);jacobian(lengths,q)'*forces];
 
-lengths = [muscle1_len,muscle2_len,muscle3_len];
-forces = [muscle1_force,muscle2_force,muscle3_force]';
-fe = [zeros(9,1);jacobian(lengths,q)'*forces];
-
-matlabFunction(fe,'file','fe','vars',{t,[q,dq],F_iso,l0m,akt});
+% matlabFunction(fe,'file','fe','vars',{t,[q,dq],F_iso,l0m,akt});
 
 function force = muscle_force(length, F_iso, akt, l0m)
     f_gauss = 0.25;
@@ -126,4 +142,11 @@ end
 
 function r = position(x,y,z)
     r = [x;y;z;1];
+end
+
+function t = coords2arr(coords)
+    t = zeros(length(coords),3);
+    for i = 1:length(coords)
+        t(i,:) = str2num(coords{i});
+    end
 end

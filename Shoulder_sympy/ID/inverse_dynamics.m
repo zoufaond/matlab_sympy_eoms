@@ -9,9 +9,9 @@ initialConditions = zeros(1,18);
 % v simulinku je zadan pohyb pro jednotlive nezavisle souradnice q1..q9 a
 % pomoci inverzni dynamiky dopocitany potrebne momentove sily
 
-force = -[10,1,20]*10;
-akt = [1,1,1]*1;
-l0m = [0.1,0.1,0.3];
+force = [556.8,1098.4];
+akt = [0.5,0.5]*1;
+l0m = [0.152404782147249,0.0902153118932702];
 
 OUT = sim('ID_3d_pend.slx',t_end);
 t = OUT.time.time;

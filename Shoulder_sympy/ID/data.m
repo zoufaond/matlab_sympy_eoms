@@ -27,7 +27,7 @@ p = [c,k,g];
 %% scapulohumeral rhythm
 %kontaktni body na scapule
 cont1 = [-0.083529 -0.01368 -0.098954]-scom;
-cont2 = [-0.105456 -0.125076 -0.075251]*0;
+cont2 = [-0.105456 -0.125076 -0.075251]-scom;
 % translation
 x_ej = -0.03; %zmena
 y_ej = -0.1; % %zmena
