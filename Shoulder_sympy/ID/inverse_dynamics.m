@@ -9,10 +9,10 @@ initialConditions = zeros(1,18);
 % v simulinku je zadan pohyb pro jednotlive nezavisle souradnice q1..q9 a
 % pomoci inverzni dynamiky dopocitany potrebne momentove sily
 table = readtable('Glenohumeral_muscles.xlsx');
-f0m = str2double(table2array(table(:,2)))';
-l0m = str2double(table2array(table(:,3)))';
+Glenohumeral_F0M = str2double(table2array(table(:,2)))';
+Glenohumeral_L0 = str2double(table2array(table(:,3)))';
 % f0m = [556.8,1098.4]/10;
-akt = [0.5,0.5,1]*1;
+akt = [0.5,0.5,1,zeros(1,10)]*1;
 % l0m = [0.152404782147249,0.0902153118932702];
 
 OUT = sim('ID_3d_pend.slx',t_end);
