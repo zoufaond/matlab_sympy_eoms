@@ -1,38 +1,49 @@
 clear all;clc
 elips_pars.a = 3;
 elips_pars.b = 2;
-A = [5;1;0];
-B = [-5;0;0];
+A = [-5;3;4];
+B = [5;-4;3];
+% A = rand(3,1)*2+2;
+% B = rand(3,1)*2-3;
 Center = [0;0;0];
 plane = side_vector(A,B,Center);
 elips_pars.m = plane(1);
 elips_pars.n = plane(2);
 elips_pars.k = plane(3);
-% v1(elips_pars)
-% v2(elips_pars)
-theta = 0:0.01:2*pi;
+vec1 = v1(elips_pars);
+vec2 = v2(elips_pars);
+T = T_elips_frame(elips_pars);
+point = T*A;
+T_vec1 = T*vec1;
+T_vec2 = T*vec2;
+% R_2\vec2(1:2)
+theta = 0:0.01:pi/2;
 coords = v1(elips_pars)*sin(theta)+v2(elips_pars)*cos(theta);
 [x_ax,~,~] = att_frame(A,B,Center);
-ss = tangent_lines(Center,A,elips_pars)
-% R_elips = T_elips_frame(elips_pars);
+[tang_p1,tang_p2] = tangent_lines(Center,A,elips_pars);
+% R_elips = T_elips_frame(elips_pars)
 % R_elips*B
 
-[Xs,Ys,Zs] = sphere;
-X2 = Xs * elips_pars.a;
-Y2 = Ys * elips_pars.b;
-Z2 = Zs * elips_pars.a;
-centre = [0;0;0];
-hold on
-plot3(coords(1,:),coords(2,:),coords(3,:),"LineWidth",2,"Color","red")
-plot3(coords(1,1),coords(2,1),coords(3,1),"*","MarkerSize",20)
-plot3(A(1),A(2),A(3),"o","MarkerSize",10)
-plot3(B(1),B(2),B(3),"x","MarkerSize",10)
-surf(X2+centre(1),Y2+centre(2),Z2+centre(3),"FaceAlpha",0.3)
-line([Center(1),x_ax(1)],[Center(2),x_ax(2)],[Center(3),x_ax(3)],"LineWidth",2,"Color","green")
-axis([-5 5 -5 5 -5 5]);
-xlabel('X')
-ylabel('Y')
-zlabel('Z')
+% [Xs,Ys,Zs] = sphere;
+% X2 = Xs * elips_pars.a;
+% Y2 = Ys * elips_pars.b;
+% Z2 = Zs * elips_pars.a;
+% centre = [0;0;0];
+% hold on
+% plot3(coords(1,:),coords(2,:),coords(3,:),"LineWidth",2,"Color","red")
+% plot3(coords(1,1),coords(2,1),coords(3,1),"*","MarkerSize",20)
+% % plot3(T_vec1(1,1),T_vec1(2,1),T_vec1(3,1),"x","MarkerSize",20)
+% % plot3(T_vec2(1,1),T_vec2(2,1),T_vec2(3,1),"o","MarkerSize",20)
+% plot3(A(1),A(2),A(3),"o","MarkerSize",10)
+% plot3(B(1),B(2),B(3),"x","MarkerSize",10)
+% surf(X2+centre(1),Y2+centre(2),Z2+centre(3),"FaceAlpha",0.3)
+% % line([Center(1),x_ax(1)],[Center(2),x_ax(2)],[Center(3),x_ax(3)],"LineWidth",2,"Color","green")
+% line([A(1),tang_p1(1)],[A(2),tang_p1(2)],[A(3),tang_p1(3)],"LineWidth",2,"Color","green")
+% line([A(1),tang_p2(1)],[A(2),tang_p2(2)],[A(3),tang_p2(3)],"LineWidth",2,"Color","blue")
+% axis([-5 5 -5 5 -5 5]);
+% xlabel('X')
+% ylabel('Y')
+% zlabel('Z')
 
 
 function semi_ax1 = v1(elips_pars)
@@ -78,15 +89,20 @@ function side_vec = side_vector(origin,insertion,centre)
     side_vec = cross(or_plane,ins_plane);
 end
 
-function point1 = tangent_lines(center,origin,elips_pars)
+function [point1_W_frame,point2_W_frame] = tangent_lines(center,origin,elips_pars)
     x0 = 0;
     y0 = 0;
-    a = norm(v2(elips_pars));
-    b = norm(v1(elips_pars));
+    T = T_elips_frame(elips_pars);
+    vec1 = v1(elips_pars);
+    vec2 = v2(elips_pars);
+    b = T*vec1;
+    a = T*vec2;
+    b = b(2);
+    a = a(1);
     % s, c = np.sin(rotation), np.cos(rotation);
-    s = sin(0);
-    c = cos(0);
-    point = T_elips_frame(elips_pars)*origin;
+    s = sin(pi/2*0);
+    c = cos(pi/2*0);
+    point = T*origin;
     p0 = point(1);
     q0 = point(2);
     % 
@@ -97,5 +113,9 @@ function point1 = tangent_lines(center,origin,elips_pars)
     m1 = (-B + sqrt(B^2 - 4*A*C))/(2*A);
     m2 = (-B - sqrt(B^2 - 4*A*C))/(2*A);
     k1 = sqrt(a^2*m1^2+b^2);
-    point1 = [-a^2*m1;-b^2]/k1;
+    k2 = sqrt(a^2*m2^2+b^2);
+    point1 = [[a^2*m1;b^2]/k1;0];
+    point2 = [[a^2*m2;b^2]/k2;0];
+    point1_W_frame = T\point1;
+    point2_W_frame = T\point2;
 end

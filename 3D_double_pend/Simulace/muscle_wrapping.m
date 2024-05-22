@@ -2,7 +2,7 @@ clear all
 insertion = [-3,-3,-1];
 origin = [-2.5,0,0.5];
 centre = [-1,0,0];
-radius = 2.5;
+radius = 1.5;
 wrap1 = wrap_point(origin,insertion,centre,radius)
 h1 = plot3([origin(1),wrap1(1)],[origin(2),wrap1(2)],[origin(3),wrap1(3)], 'LineWidth', 2);
 hold on
@@ -13,7 +13,7 @@ xlabel('X')
 ylabel('Y')
 zlabel('Z')
 for t = 0:pi/50:2*pi
-    insertion = [-3,sin(t)*.5,cos(t)*1.5];
+    insertion = [-3,sin(t)*1.5,cos(t)*1.5];
     origin = [3,cos(t)*1.5,cos(t)*1];
     centre = [0,0,0];
     % [x,y,z] = att_frame(origin, insertion, centre);
@@ -132,7 +132,6 @@ function pos = wrap_point(origin,insertion,centre,radius)
     base = norm(origin-centre);
     x = radius^2/base;
     y = sqrt(radius^2-x^2);
-    % angle = atan2(x_att(2),x_att(1));
     RotMat = [x_att,0;y_att,0;z_att,0;0,0,0,1];
     pos = T_x(centre(1))*T_y(centre(2))*T_z(centre(3))*inv(RotMat)*position(x,y,0);
     pos = pos(1:3);
@@ -140,7 +139,6 @@ end
 
 function [x_ax,y_ax,z_ax] = att_frame(origin, insertion, centre)
     side = side_vector(origin,insertion,centre);
-    % z_ax = (side-centre)/norm(side-centre);
     z_ax = (side/norm(side));
     y_ax = cross(z_ax,origin-centre)/norm(cross(z_ax,origin-centre));
     x_ax = cross(y_ax,z_ax);
@@ -169,26 +167,4 @@ function rot_phiz = R_z2D(phiz)
     rot_phiz = [cos(phiz),-sin(phiz),0;
                 sin(phiz), cos(phiz),0;
                 0           ,0      ,1];
-end
-
-function R = world_to_local(origin,insertion,centre)
-    world = eye(3);
-    [x,y,z] = att_frame(origin, insertion, centre);
-    local = [x;y;z];
-
-    for i =1:3
-        for j = 1:3
-            R(i,j) = dot(world(i,:),local(j,:));
-        end
-    end
-end
-function h = circle(pos,r)
-hold on
-x = pos(1);
-y = pos(2);
-th = 0:pi/50:2*pi;
-xunit = r * cos(th) + x;
-yunit = r * sin(th) + y;
-h = plot(xunit, yunit);
-hold off
 end
