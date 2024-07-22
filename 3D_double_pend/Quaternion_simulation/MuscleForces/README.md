@@ -42,13 +42,6 @@ $$
 As shown in themapping_analysis.m, this method is valid only mapping 'quaternion' forces into external torques, mapping from external torque to 'quaternion' forces is not unique - 4 of 'quaternion' forces (4 DOF) to represent 3 external torques (3 DOF) - new constraint must be introduced:
 
 ## Constrained muscle lengths
-$$\omega=2\,\b Q\,\b{\dot{z}}\tag 2$$
-where 
-$$\b Q= \left[ \begin {array}{cccc} -b&a&-d&c\\ -c&d&a&-b
-\\ -d&-c&b&a\end {array} \right] \quad
-\b{\dot{z}}= \begin{bmatrix}
-   \dot{a} \\
-   \dot{b} \\
-   \dot{c} \\
-   \dot{d} \\
- \end{bmatrix}$$
+So we have this equations for mapping time derivative of quaternion to angular velocities
+
+$$\textbf{\omega}_ = 2\textbf{G} \textbf{\dot{Q}}$$
