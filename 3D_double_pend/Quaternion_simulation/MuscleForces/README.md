@@ -44,4 +44,4 @@ As shown in themapping_analysis.m, this method is valid only mapping 'quaternion
 ## Constrained muscle lengths
 So we have this equations for mapping time derivative of quaternion to angular velocities
 
-$$\textbf{\omega}_ = 2\textbf{G} \textbf{\dot{Q}}$$
+$$\omega = 2\textbf{G} \dot{Q}$$
