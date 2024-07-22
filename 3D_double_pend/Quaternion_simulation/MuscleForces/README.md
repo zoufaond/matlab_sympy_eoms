@@ -14,7 +14,7 @@ $$\textit{F}_Q = 2\textbf{G}^TT'$$
 
 where $\textit{F}_Q$ is a vector of generalized forces (quaternion elements as generalized coordinates) and $T'$ is a vector of external torque and $\textbf{G}$ is the matrix that maps between those two
 
-$$G = \begin{bmatrix}-Q_1 & Q_0 & Q_3 & -Q_2\\ -Q_2&-Q_3& Q_0& Q_1 \\ -Q_3& Q_2& -Q_1& Q_0\end{bmatrix}.$$
+$$G = \begin{bmatrix}-Q_1 & Q_0 & Q_3 & -Q_2\\\ -Q_2&-Q_3& Q_0& Q_1 \\\ -Q_3& Q_2& -Q_1& Q_0\end{bmatrix}.$$
 
 I have derived a vector of generalized forces, I mapped it to a vector of external torques, which works correctly. However, when I mapped the external torques back to generalized forces, the generalized forces were different. Does that mean that this mapping is not unique and different generalized forces in terms of quaternion can rotation represent the same external torques applied to a rigid body?
 
