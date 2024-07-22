@@ -45,3 +45,9 @@ As shown in themapping_analysis.m, this method is valid only mapping 'quaternion
 So we have this equations for mapping time derivative of quaternion to angular velocities
 
 $$\omega = 2\textbf{G} \dot{Q}$$
+
+We have a constraint for quaternion to be unit (for rotation). We can take a derivative of this constraint w.r.t. time, so the two constraints are like this:
+
+$$Q_0^2 + Q_1^2 + Q_2^2 + Q_3^2 = 1 \quad \dot{Q_0}Q_0 + Q_1^2 + Q_2^2 + Q_3^2 = 1 $$
+
+
