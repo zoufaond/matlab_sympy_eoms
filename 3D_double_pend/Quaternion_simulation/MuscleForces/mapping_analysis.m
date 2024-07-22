@@ -3,6 +3,9 @@ genEq = 0; % don't generate equations, we already have them
 q = sym('q',[1 8],'real');
 phi = sym('phi',[1 6]);
 
+% generate the jacobians of muscle lengths using all quaternions, length
+% using the constraint and only 3 elements of quaternion and muscle length
+% using YZY rotations for spherical joint
 JQsym = genFm_quat(genEq);
 JQCnstsym = genFm_quat_Cnst(genEq);
 Jseqsym = genFM_seq();
