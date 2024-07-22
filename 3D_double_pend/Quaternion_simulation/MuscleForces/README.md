@@ -43,11 +43,4 @@ As shown in themapping_analysis.m, this method is valid only mapping 'quaternion
 
 ## Constrained muscle lengths
 $$\omega=2 \textbf{G} \textbf{\dot{Q}}$$
-where &\b G& is the mapping matrix and 
-$$
-\b{\dot{z}}= \begin{bmatrix}
-   \dot{a} \\
-   \dot{b} \\
-   \dot{c} \\
-   \dot{d} \\
- \end{bmatrix}$$
+where &G& is the mapping matrix and
