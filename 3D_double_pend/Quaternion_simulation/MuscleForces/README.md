@@ -8,11 +8,11 @@ Here the muscles forces and external torques are derived.
 
 ### Equations to mapping_analysis.m:
 
-In this [paper](https://arxiv.org/abs/0811.2889) the mapping between generalized forces and external torques for a rigid body (when the rotation is described by a quaternion) is derived:
+In this [paper](https://arxiv.org/abs/0811.2889) the mapping between 'quaternion' forces and external torques for a rigid body (when the rotation is described by a quaternion) is derived:
 
 $$\textit{F}_Q = 2\textbf{G}^TT'$$
 
-where $\textit{F}_Q$ is a vector of generalized forces (quaternion elements as generalized coordinates) and $T'$ is a vector of external torque and $\textbf{G}$ is the matrix that maps between those two
+where $\textit{F}_Q$ is a $4 \times 1$ vector of 'quaternion' forces and $T'$ is a $3 \times 1$ vector of external torque and $\textbf{G}$ is the matrix that maps between those two
 
 $$G = \begin{bmatrix}-Q_1 & Q_0 & Q_3 & -Q_2\\\ -Q_2&-Q_3& Q_0& Q_1 \\\ -Q_3& Q_2& -Q_1& Q_0\end{bmatrix}.$$
 
