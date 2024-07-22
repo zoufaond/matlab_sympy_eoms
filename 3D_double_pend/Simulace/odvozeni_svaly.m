@@ -2,23 +2,25 @@ clc;clear all
 
 q = sym('q',[1 6]);
 dq = sym('dq', [1 6]);
-F_iso = sym('F_iso',[1 3]);
-l0m = sym('l0m', [1 3]);
-akt = sym('akt',[1 3]);
+F_iso = sym('F_iso',[1 6]);
+l0m = sym('l0m', [1 6]);
+akt = sym('akt',[1 6]);
 t = sym('t');
-muscle1_len = muscle_length('Thorax','Clavicle',[-10, 12, 0],[1, 1, -10],q);
-muscle2_len = muscle_length('Thorax','Scapula',[-10, 12, 0],[-1, 1, -10],q);
-muscle3_len = muscle_length('Clavicle','Scapula',[-4, 5, 0],[1,-6,3],q);
+% muscle_len(1) = muscle_length('Thorax','Clavicle',[-10, 12, 0],[1, 1, -10],q);
+% muscle_len(2) = muscle_length('Thorax','Scapula',[-10, 12, 0],[-1, 1, -10],q);
+% muscle_len(1) = muscle_length('Clavicle','Scapula',[-4 5 0],[1 -6 3],q);
+% muscle_len(4) = muscle_length('Thorax','Scapula',[-6, -6, 0],[2,-2,5],q);
+% muscle_len(5) = muscle_length('Thorax','Scapula',[-7, 5, 0],[-3,-3,0],q);
+muscle_len(1) = muscle_length('Thorax','Scapula',[8, -4, 0],[-4,4,-4],q);
 
-muscle1_force = muscle_force(muscle1_len,F_iso(1), akt(1), l0m(1));
-muscle2_force = muscle_force(muscle2_len,F_iso(2), akt(2), l0m(2));
-muscle3_force = muscle_force(muscle3_len,F_iso(3), akt(3), l0m(3));
+for i=1:1
+    muscle_forces(i) = muscle_force(muscle_len(i),F_iso(i),akt(i),l0m(i));
+end
+moment_arms = jacobian(muscle_len,q)';
+matlabFunction(moment_arms,'file','moment_arms','vars',{t,q});
+fe = [jacobian(muscle_len,q)'*muscle_forces']; %zeros(6,1);
 
-lengths = [muscle1_len,muscle2_len,muscle3_len];
-forces = [muscle1_force,muscle2_force,muscle3_force]';
-fe = [zeros(6,1);jacobian(lengths,q)'*forces];
-
-matlabFunction(fe,'file','fe','vars',{t,[q,dq],F_iso,l0m,akt});
+% matlabFunction(fe,'file','fe','vars',{t,[q,dq],F_iso,l0m,akt});
 
 function force = muscle_force(length, F_iso, akt, l0m)
     f_gauss = 0.25;

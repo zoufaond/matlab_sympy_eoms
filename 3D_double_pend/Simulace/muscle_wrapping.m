@@ -12,6 +12,7 @@ axis([-3 3 -3 3 -3 3]);
 xlabel('X')
 ylabel('Y')
 zlabel('Z')
+i = 1;
 for t = 0:pi/50:2*pi
     insertion = [-3,sin(t)*1.5,cos(t)*1.5];
     origin = [3,cos(t)*1.5,cos(t)*1];
@@ -23,7 +24,7 @@ for t = 0:pi/50:2*pi
     wrap2 = wrap_point(insertion,origin,centre,radius);
     % wr1 = line(,,,'LineWidth',2);
     % wr2 = line([insertion(1),wrap2(1)],[insertion(2),wrap2(2)],,'LineWidth',2);
-    angle = cosine_angle(origin,insertion,centre,radius);
+    angle = wrap_angle(origin,insertion,centre,radius);
     if angle > 0
         set(h1, 'XData', [origin(1),wrap1(1)], 'YData', [origin(2),wrap1(2)], 'ZData', [origin(3),wrap1(3)],"Color","red","LineWidth",2);
         set(h2, 'XData', [insertion(1),wrap2(1)], 'YData', [insertion(2),wrap2(2)], 'ZData', [insertion(3),wrap2(3)]);
@@ -31,6 +32,7 @@ for t = 0:pi/50:2*pi
         set(h1, 'XData', [origin(1),insertion(1)], 'YData', [origin(2),insertion(2)], 'ZData', [origin(3),insertion(3)],"Color","red","LineWidth",2);
         set(h2, 'XData', [origin(1),insertion(1)], 'YData', [origin(2),insertion(2)], 'ZData', [origin(3),insertion(3)],"Color","red","LineWidth",2);
     end
+    Lm = muscle_length(origin, insertion,centre,radius)
     [Xs,Ys,Zs] = sphere;
     hold on
     X2 = Xs * radius;
@@ -39,7 +41,8 @@ for t = 0:pi/50:2*pi
     surf(X2+centre(1),Y2+centre(2),Z2+centre(3))
     % set(h, 'XData', [P1(1) P(1)], 'YData', [P1(2) P(2)], 'ZData', [P1(3) P(3)]);
     
-    pause(0.2)
+    pause(0.01)
+    i = i+1;
 end
 % ang = cosine_angle(origin, insertion, centre)
 
@@ -57,15 +60,28 @@ end
 % axis equal
 
 
-function angle = cosine_angle(origin, insertion, centre, radius)
+function length = muscle_length(origin, insertion,centre,radius)
+    O_wrap = wrap_point(origin,insertion,centre,radius);
+    O_wrap_length = two_points_dist(origin,O_wrap);
+    I_wrap = wrap_point(insertion,origin,centre,radius);
+    I_wrap_length = two_points_dist(insertion, I_wrap);
+    wrap_length = wrap_angle(origin, insertion, centre, radius)*radius;
+    length = O_wrap_length + I_wrap_length + wrap_length;
+end
+
+function dist = two_points_dist(A,B)
+    dist = sqrt((A(1)-B(1))^2 + (A(2)-B(2))^2 + (A(3)-B(3))^2);
+end
+
+function angle = wrap_angle(origin, insertion, centre, radius)
     [frame,~,~] = att_frame(origin,insertion,centre);
     wrap1 = wrap_point(origin,insertion,centre,radius);
     wrap2 = wrap_point(insertion,origin,centre,radius);
     mag1 = sqrt(sum(wrap1.^2));
     mag2 = sqrt(sum(wrap2.^2));
     mag_frame = sqrt(sum(frame.^2));
-    cosine1 = 180/pi*acos(dot(frame,wrap1)/(mag1*mag_frame));
-    cosine2 = 180/pi*acos(dot(frame,wrap2)/(mag2*mag_frame));
+    cosine1 = acos(dot(frame,wrap1)/(mag1*mag_frame));
+    cosine2 = acos(dot(frame,wrap2)/(mag2*mag_frame));
     angle = cosine2-cosine1;
 end
 
@@ -106,25 +122,6 @@ end
 
 function r = position(x,y,z)
     r = [x;y;z;1];
-end
-
-function len = muscle_length_wrap(origin,insertion,centre,radius)
-    wrap_len = wrap_angle(origin,insertion,centre,radius)*radius;
-    I_pos = wrap_point(insertion,centre,radius,1);
-    O_pos = wrap_point(origin,centre,radius,-1);
-    O_len = vec_dist(O_pos,origin);
-    I_len = vec_dist(I_pos,insertion);
-    len = wrap_len+O_len+I_len;
-end
-
-function len = vec_dist(O,I)
-    len = sqrt((O(1) - I(1))^2 + (O(2) - I(2))^2);
-end
-
-function angle = wrap_angle(origin,insertion,centre,radius)
-    O_pos = wrap_point(origin,centre,radius,-1);
-    I_pos = wrap_point(insertion,centre,radius,1);
-    angle =  atan2(O_pos(2)-centre(2),O_pos(1)-centre(1))-atan2(I_pos(2)-centre(2),I_pos(1)-centre(1));
 end
 
 function pos = wrap_point(origin,insertion,centre,radius)
