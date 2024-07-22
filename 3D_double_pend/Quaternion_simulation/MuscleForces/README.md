@@ -42,7 +42,7 @@ $$
 As shown in themapping_analysis.m, this method is valid only mapping 'quaternion' forces into external torques, mapping from external torque to 'quaternion' forces is not unique - 4 of 'quaternion' forces (4 DOF) to represent 3 external torques (3 DOF) - new constraint must be introduced:
 
 ## Constrained muscle lengths
-$$\omega=2\,\b G\,\b{\dot{Q}}$$
+$$\omega=2 \textbf{G} \textbf{\dot{Q}}$$
 where &\b G& is the mapping matrix and 
 $$
 \b{\dot{z}}= \begin{bmatrix}
