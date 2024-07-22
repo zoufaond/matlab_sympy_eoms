@@ -6,7 +6,7 @@ Here the muscles forces and external torques are derived.
 
 `GenFM_quat_Cnst.m` derives muscle length Jacobian in terms of q2,q3 and q4 elements, when genEq=1, the function will generate FM_quat.m.
 
-Equations to mapping_analysis.m:
+### Equations to mapping_analysis.m:
 
 In this [paper](https://arxiv.org/abs/0811.2889) the mapping between generalized forces and external torques for a rigid body (when the rotation is described by a quaternion) is derived:
 
