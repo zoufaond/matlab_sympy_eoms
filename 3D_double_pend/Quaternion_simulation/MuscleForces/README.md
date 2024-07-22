@@ -48,6 +48,13 @@ $$\omega = 2\textbf{G} \dot{Q}$$
 
 We have a constraint for quaternion to be unit (for rotation). We can take a derivative of this constraint w.r.t. time, so the two constraints are like this:
 
-$$Q_0^2 + Q_1^2 + Q_2^2 + Q_3^2 = 1 \quad \dot{Q_0}Q_0 + Q_1^2 + Q_2^2 + Q_3^2 = 1 $$
+$$Q_0^2 + Q_1^2 + Q_2^2 + Q_3^2 = 1 \quad \dot{Q_0}Q_0 + \dot{Q_1}Q_1 + \dot{Q_2}Q_2 + \dot{Q_3}Q_3 = 0 $$
+
+from this we obtain
+
+$$
+\begin{bmatrix} \dot{Q_0}\\\ \dot{Q_1} \\\ \dot{Q_2} \\\ \dot{Q_3} \end{bmatrix}
+\begin{bmatrix}-Q_1 & Q_0 & Q_3 & -Q_2\\\ -Q_2&-Q_3& Q_0& Q_1 \\\ -Q_3& Q_2& -Q_1& Q_0 \end{bmatrix}
+$$
 
 
