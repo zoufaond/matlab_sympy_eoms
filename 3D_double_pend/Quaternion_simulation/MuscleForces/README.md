@@ -53,7 +53,6 @@ $$Q_0^2 + Q_1^2 + Q_2^2 + Q_3^2 = 1 \quad \dot{Q_0}Q_0 + \dot{Q_1}Q_1 + \dot{Q_2
 from this we obtain
 
 $$
-
 \begin{bmatrix} \dot{Q_0}\\\ \dot{Q_1} \\\ \dot{Q_2} \\\ \dot{Q_3} \end{bmatrix} = 
 \underbrace{\begin{bmatrix} \frac{-Q_1}{Q_0} & \frac{-Q_1}{Q_0} & \frac{-Q_1}{Q_0} \\\ 1&0&0 \\\ 0&1&0 \\\ 0&0&1 \end{bmatrix}}_\textbf{T}
 \begin{bmatrix}  \dot{Q_1} \\\ \dot{Q_2} \\\ \dot{Q_3} \end{bmatrix}
