@@ -42,30 +42,13 @@ $$
 As shown in themapping_analysis.m, this method is valid only mapping 'quaternion' forces into external torques, mapping from external torque to 'quaternion' forces is not unique - 4 of 'quaternion' forces (4 DOF) to represent 3 external torques (3 DOF) - new constraint must be introduced:
 
 ## Constrained muscle lengths
-$$   a^2+b^2+c^2+d^2=1\quad, 
-a\,\dot a+b\,\dot b+c\,\dot c+d\,\dot d=0$$
-
-from here you obtain 
-
-$$ \b{\dot{z}}= \begin{bmatrix}
+$$\omega=2\,\b Q\,\b{\dot{z}}\tag 2$$
+where 
+$$\b Q= \left[ \begin {array}{cccc} -b&a&-d&c\\ -c&d&a&-b
+\\ -d&-c&b&a\end {array} \right] \quad
+\b{\dot{z}}= \begin{bmatrix}
    \dot{a} \\
    \dot{b} \\
    \dot{c} \\
    \dot{d} \\
- \end{bmatrix}= \underbrace{\left[ \begin {array}{ccc} -{\frac {b}{a}}&-{\frac {c}{a}}&-{\frac {d
-}{a}}\\1&0&0\\ 0&1&0
-\\0&0&1\end {array} \right] }_{\b T}
-\,\underbrace{\begin{bmatrix}
-   \dot{b} \\
-   \dot{c} \\
-   \dot{d} \\
- \end{bmatrix}}_{\b{\dot{q}}}
-$$
-hence equation (2)
-
- $$\omega=\underbrace{2\,\b Q\,\b T}_{\b J (3\times 3)}\,\b{\dot{q}}$$
-
-the generalize torque is:
-
-$$\b\tau_G=\b J^T\b\tau_E\quad, 
-\b\tau_E=\left(\b J^T\right)^{-1}\b\tau_G$$
+ \end{bmatrix}$$
