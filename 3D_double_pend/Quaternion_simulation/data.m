@@ -9,7 +9,7 @@ Ixx = 8.1667;
 Iyy = 8.1667;
 Izz = 1.66667;
 l = 10;
-% Child and parent coordinates of joints
+% Child and parent coordinates of joints (EOMs and muscle length are created for this parameters, so don't change)
 rigid1C = [0,0,5];
 rigid1P = [0,0,-5];
 rigid2C = [0,0,5];
@@ -31,4 +31,4 @@ l0m = [20,30,30,30,30,30];
 %random force and activation of muscles (in this model we don't care if muscle pushes or pulls, it's just for check if the equations are correct)
 force = rand(1,6)*500-250;
 %activations are constant during the simulation
-akt = rand(1,6);
+activation = rand(6,1);

@@ -1,4 +1,4 @@
-genEq = 0; % don't generate equations, we already have them
+genEq = 1; % don't generate external torques equations, we already have them (it also takes quite a long time)
 
 q = sym('q',[1 8],'real');
 phi = sym('phi',[1 6]);
@@ -6,10 +6,11 @@ phi = sym('phi',[1 6]);
 % generate the jacobians of muscle lengths using all quaternions, length
 % using the constraint and only 3 elements of quaternion and muscle length
 % using YZY rotations for spherical joint
-JQsym = genFm_quat(genEq);
-JQCnstsym = genFm_quat_Cnst(genEq);
-Jseqsym = genFM_seq();
+JQsym = genFm_quat(genEq); % unconstrained muscle lengths jacobian
+JQCnstsym = genFm_quat_Cnst(genEq); % constrained muscle lengths jacobian
+Jseqsym = genFM_seq(); % muscle lengths jacobian for YZY sequence of rotations (both joints have YZY)
 
+% create anonymous functions
 JQ = matlabFunction(JQsym,'Vars',{q});
 JQCnst = matlabFunction(JQCnstsym,'Vars',{q});
 Jseq = matlabFunction(Jseqsym,'Vars',{phi});
@@ -26,7 +27,8 @@ quat1 = eul2quat(phiVal1,'YZY'); % get quaternion from YZY sequence
 quat2 = eul2quat(phiVal2,'YZY'); % get quaternion from YZY sequence
 quat = [quat1,quat2];
 
-% calculate jacobians in the random configuration
+% calculate jacobians only for unconstrained muscle length and YZY sequence
+% muscle lengths only, we'll get to the constrained one eventually
 JQval = JQ(quat);
 Jseqval = Jseq(phiVal);
 
@@ -142,7 +144,7 @@ function res = quat2spatialCnst(jac,quat,Njoints)
     k = 1;
     kq = 1;
     for i=1:Njoints
-        res(k:k+2,:) = invJtrans(quat(kq:kq+3)) * jac(k:k+2,:);
+        res(k:k+2,:) = invEtrans(quat(kq:kq+3)) * jac(k:k+2,:);
         k = k+3;
         kq = kq+4;
     end
@@ -152,7 +154,7 @@ function res = spatial2quatCnst(jac,quat,Njoints)
     k = 1;
     kq = 1;
     for i=1:Njoints
-        res(k:k+2,:) = Jtrans(quat(kq:kq+3)) * jac(k:k+2,:);
+        res(k:k+2,:) = Etrans(quat(kq:kq+3)) * jac(k:k+2,:);
         k = k+3;
         kq = kq+4;
     end
@@ -211,12 +213,12 @@ function res = T(quat)
     res = [-b/a, -c/a, -d/a;eye(3)];
 end
 
-function res = Jtrans(quat)
+function res = Etrans(quat)
     res = 2*G(quat)*T(quat);
     res = res';
 end
 
-function res = invJtrans(quat)
+function res = invEtrans(quat)
     % inverse of Jtrans - resulting matrix is actually this simple
     q1 = quat(1);
     q2 = quat(2);
